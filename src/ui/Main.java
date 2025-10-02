@@ -58,23 +58,71 @@ public class Main {
         }
     }
 
+
     /**
      * Verifica si la expresion esta balanceada usando PilaGenerica
      * @param s expresion a verificar
      * @return true si esta balanceada, false si no
      */
     public boolean verificarBalanceo(String s) {
-        // TODO: completar 
-        return false;
+    boolean verify = false;
+    PilaGenerica<String> pilaEntrada = new PilaGenerica<>(s.length());
+
+
+    char[] arregloCaracteres = s.toCharArray();
+    for (int j = 0; j < arregloCaracteres.length; j++) {
+        pilaEntrada.Push(String.valueOf(arregloCaracteres[j]));
     }
+
+    for (int index = s.length() - 1; index >= 0; index--) {
+        String c = pilaEntrada.getArreglo()[index];
+
+        if (c.equals("}") || c.equals("]") || c.equals(")")) {
+
+            // Asegurarse de que la pila no esté vacía antes de usar getTop()
+
+        int topIndex = pilaEntrada.getTop();
+        String tope = pilaEntrada.getArreglo()[topIndex];
+
+                if ((c.equals("}") && tope.equals("{")) ||
+                    (c.equals("]") && tope.equals("[")) ||
+                    (c.equals(")") && tope.equals("("))) {
+
+                    String temp = pilaEntrada.Pop();
+
+                    if (temp.equals(tope)) {
+                        verify = true;
+                        continue; // ir al siguiente caracter
+                    } else {
+                        return false;
+                    }
+                
+                } else {
+                pilaEntrada.Pop();
+            }
+        } else {
+            return false;
+        }
+    }
+
+    return verify;
+}
 
     /**
      * Encuentra y muestra todos los pares unicos de numeros que sumen objetivo usando TablasHash.
      * @param numeros arreglo de numeros enteros
      * @param objetivo suma objetivo
+     * @throws Exception 
      */
-    public void encontrarParesConSuma(int[] numeros, int objetivo) {
-        // TODO: completar
+    public void encontrarParesConSuma(int[] numeros, int objetivo) throws Exception {
+        TablasHash tablaPrincipal = new TablasHash(numeros.length);
+        for (int i = 0; i < numeros.length; i++) {
+            tablaPrincipal.insert(numeros[i], numeros[i]); // insertar valor en la tabla
+        }
+
+        
+
+
     }
 
     public static void main(String[] args) throws Exception {
